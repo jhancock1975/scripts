@@ -12,12 +12,12 @@ path="${!#}"
 # Remove the last argument (path) from the arguments array
 set -- "${@:1:$#-1}"
 
-# Initialize the search command with the first word
-search_command="grep -rl '$1' '$path'"
+# Initialize the search command with the first word and exclude patterns
+search_command="find '$path' -type f -iname '*.*' ! -iname '*.csv' ! -iname '*.log' ! -iname '*.json' -print0 | xargs -0 grep -il '$1'"
 
-# Add additional words to the search command
+# Add additional words to the search command and exclude patterns
 for word in "${@:2}"; do
-  search_command+=" | xargs grep -l '$word'"
+  search_command+=" | xargs -0 grep -il '$word'"
 done
 
 # Execute the search command
