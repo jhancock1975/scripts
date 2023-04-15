@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# set to:
+# 5 for CapsLock
+# 9 for NumLock
+# 13 for ScrollLock
+FIELD=5
+
+ICON_ON="/home/george/caps-lock-on.svg"
+ICON_OFF="/home/george/caps-lock-off.svg"
+
+STATUS=`xset q | grep Caps | tr -s ' ' | cut -d ' ' -f $FIELD`
+
+if [[ $STATUS == "on" ]]; then
+	echo "<img>${ICON_ON}</img>"
+else
+	echo "<img>${ICON_OFF}</img>"
+fi
+echo "<tool>CapsLock: $STATUS</tool>"
